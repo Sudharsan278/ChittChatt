@@ -123,6 +123,29 @@ export const updateProfile = async (req,res) => {
     }
 }
 
+export const updateName = async (req, res) => {
+
+   try {
+    
+        const userId = req.user._id;
+        const {fullName : updatedFullName} = req.body;
+
+        if(!updatedFullName || updatedFullName.trim().length < 3)
+            return res.status(400).json({message : "Name should contain atleast 3 characters!"});
+
+        const user = await User.findByIdAndUpdate(userId, {fullName : updatedFullName}, {new : true});
+
+        if(!user)
+            return res.status(404).json({message : "Invalid Credentials!"});
+
+        return res.status(200).json({message : "Success", user});
+
+   } catch (error) {
+        console.log("Error in updateName Controller :- ", error.message);
+        return res.status(500).json({message : "Internal Server Error!"});
+   }
+}
+
 export const userDetails = (req, res) => {
 
     try {
