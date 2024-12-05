@@ -7,6 +7,7 @@ import SignUp from "./components/SignUp.jsx"
 import Login from "./components/Login.jsx"
 import Settings from "./components/Settings.jsx"
 import UserProfile from "./components/UserProfile.jsx"
+import ForgotPassword from './components/ForgotPassword.jsx'
 import { useAuthStore } from './store/useAuthStore.js'
 import {Loader} from "lucide-react"
 import {Toaster} from "react-hot-toast";
@@ -47,6 +48,7 @@ const App = () => {
         <Route path='/login' element={!authUser ? <Login/> : <Navigate to = "/"/> }/>
         <Route path='/settings' element={<Settings/>}/>
         <Route path='/profile' element={authUser ? <UserProfile/> : <Navigate to = "/login"/>}/>
+        <Route path='/forgotpassword' element={<ForgotPassword/>}/>
 
       </Routes>
       

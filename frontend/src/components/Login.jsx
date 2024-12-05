@@ -130,6 +130,14 @@ const Login = () => {
               </Link>
             </p>
           </div>
+          <div className="text-center">
+            <p className="text-base-content/60">
+              Forgot your password ?
+              <Link to="/forgotpassword" className="link link-primary">
+                Reset it!
+              </Link>
+            </p>
+          </div>
         </div>
       </div>
 

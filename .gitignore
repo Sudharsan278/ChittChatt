@@ -1,2 +1,8 @@
+# Ignore .env file in the backend folder
 /backend/.env
+
+# Ignore .env file in the frontend folder
 /frontend/.env
+
+# Ignore all .env files throughout the repository
+*.env

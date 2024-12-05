@@ -2,6 +2,7 @@ import {create} from "zustand"
 import { axiosInstance } from "../utils/axios.js"
 import toast from "react-hot-toast";
 import {io} from 'socket.io-client'
+import { Navigate } from "react-router-dom";
 
 const BASE_URL = 'http://localhost:5000';
 
@@ -14,6 +15,8 @@ export const useAuthStore = create((set, get) => ({
     isUpdatingName : false,
     onlineUsers : [],
     socket : null,
+    isGettingEmail : true,
+    gotEmail : false,
 
     isCheckingAuth : true,
 
@@ -112,6 +115,39 @@ export const useAuthStore = create((set, get) => ({
             set({isUpdatingName : false})
         }
     }, 
+
+    forgotPassword : async (email) => {
+      
+        try {            
+            console.log(email)
+            const response = await axiosInstance.post("/auth/forgotpassword", email);
+            set({isGettingEmail : false});
+            set({gotEmail : true});
+            toast.success("Recovery Email has been Sent Successfully!");
+
+        } catch (error) {
+            
+            console.log("Error in forgotPassword :- ", error.message);
+           
+        }
+
+    },
+
+
+    resetPassword : async (password,token, navigate) => {
+
+        try {
+            const response = await axiosInstance.patch(`/auth/resetpassword/${token}`, {password});
+            // if(response.data.message === 'Password Changed Successfully!')
+            toast.success("Password Updated Successfully!");
+            navigate("/login");
+            
+        } catch (error) {
+            console.log("Error in resetPassword :- ",error.message);  
+            toast.error("Internal Server Error!")
+        }
+
+    },
 
     connectToSocket : () => {
 
